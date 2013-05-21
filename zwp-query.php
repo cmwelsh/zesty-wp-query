@@ -42,7 +42,7 @@ class Zesty_Post_Iterator implements Iterator {
 
     function next() {
         $this->index++;
-        $valid = isset($this->posts[$this->key()]);     
+        $valid = isset($this->posts[$this->key()]);
     }
 
     function valid() {
@@ -62,11 +62,17 @@ class Zesty_Post_Iterator implements Iterator {
 class Zesty_Query_Iterator extends Zesty_Post_Iterator implements Countable {
     protected $query;
 
-    public function __construct($query_arguments = null) {
-        if ($query_arguments === null) {
+    public function __construct($options = null) {
+        $defaults = array(
+            'post_status' => 'publish',
+            'order' => 'ASC',
+            'orderby' => 'menu_order',
+        );
+        if ($options === null) {
             $this->query = $GLOBALS['wp_query'];
         }
         else {
+            $query_arguments = array_merge($defaults, $options);
             $this->query = new WP_Query($query_arguments);
         }
         parent::__construct($this->query->posts);
