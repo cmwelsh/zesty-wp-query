@@ -67,6 +67,7 @@ class Zesty_Query_Iterator extends Zesty_Post_Iterator implements Countable {
             'post_status' => 'publish',
             'order' => 'ASC',
             'orderby' => 'menu_order',
+            'posts_per_page' => -1,
         );
         if ($options === null) {
             $this->query = $GLOBALS['wp_query'];
